@@ -1,4 +1,4 @@
-package com.natewilliford;
+package com.natewilliford.fixer;
 
 public class Main {
 

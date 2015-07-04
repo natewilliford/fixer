@@ -1,4 +1,4 @@
-package com.natewilliford.com.natewilliford.objects;
+package com.natewilliford.fixer.objects;
 
 import java.util.HashMap;
 import java.util.Map;
