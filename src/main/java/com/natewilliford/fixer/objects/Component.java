@@ -4,11 +4,13 @@ public abstract class Component {
 
     private GameObject gameObject;
 
-    public void setGameObject(GameObject gameObject) {
+    void setGameObject(GameObject gameObject) {
         this.gameObject = gameObject;
     }
 
-    public GameObject getGameObject() {
+    GameObject getGameObject() {
         return gameObject;
     }
+
+    abstract void onInit();
 }
