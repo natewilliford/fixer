@@ -8,9 +8,9 @@ public abstract class Component {
         this.gameObject = gameObject;
     }
 
-    GameObject getGameObject() {
+    public GameObject getGameObject() {
         return gameObject;
     }
 
-    abstract void onInit();
+    public abstract void onInit();
 }

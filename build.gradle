@@ -10,5 +10,10 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+//    compile 'org.restlet.jse:org.restlet:2.3.3',
+//            'org.restlet.jse:org.restlet.ext.jackson:2.3.3'
+
+    compile 'net.jcip:jcip-annotations:1.0'
+
+    testCompile 'junit:junit:4.11'
 }

@@ -5,14 +5,12 @@ import com.natewilliford.fixer.objects.Component;
 public class Components {
 
     public static class TestComponent extends Component {
-        public TestComponent() {
-            super();
-        }
+        @Override
+        public void onInit() {}
     }
 
     public static class OtherTestComponent extends Component {
-        public OtherTestComponent() {
-            super();
-        }
+        @Override
+        public void onInit() {}
     }
 }
