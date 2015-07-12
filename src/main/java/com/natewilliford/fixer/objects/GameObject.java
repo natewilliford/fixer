@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GameObject {
+public abstract class GameObject {
 
     private final Map<Class, Component> components = new HashMap<>();
     private final Map<Class, Updatable> updatableComponents = new HashMap<>();
 
-    public GameObject() {}
+    public abstract int getType();
 
     public void addComponent(Component component) {
         component.setGameObject(this);
@@ -28,12 +28,12 @@ public class GameObject {
     @SuppressWarnings("unchecked")
     public <T extends Component> T getComponent(Class<T> c) {
         // TODO: Make sure we've called init so all the components get a chance to start.
-        // TODO: Throw something if it doesn't exist.
+        // TODO: Throw something if it doesn't exist?
         return (T) components.get(c);
     }
 
     public void init() {
-        // TODO: Make sure it's not initialized more than once.
+        // TODO: Make sure it's initialized exactly once.
         for (Component c : components.values()) {
             c.onInit();
         }

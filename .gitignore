@@ -1,6 +1,7 @@
 .idea
 *.iml
 out/
+*.db
 .gradle
 build/
 gradle-app.setting

@@ -13,12 +13,17 @@ public class ResourceConversionComponentTest {
 
     @Before
     public void setUp() throws Exception {
-        gameObject = new GameObject();
+        gameObject = new GameObject() {
+            @Override
+            public int getType() {
+                return 0;
+            }
+        };
 
         resourceStorageComponent = new ResourceStorageComponent(Resources.CORN, Resources.CORN_SEED, Resources.WATER);
         gameObject.addComponent(resourceStorageComponent);
 
-        resourceConversionComponent = new ResourceConversionComponent();
+        resourceConversionComponent = new ResourceConversionComponent(1000);
         gameObject.addComponent(resourceConversionComponent);
 
         gameObject.init();

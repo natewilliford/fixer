@@ -13,7 +13,12 @@ public class GameObjectTest extends TestCase {
 
     @Before
     public void setUp() throws Exception {
-        gameObject = new GameObject();
+        gameObject = new GameObject() {
+            @Override
+            public int getType() {
+                return 0;
+            }
+        };
     }
 
     @Test

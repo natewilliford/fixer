@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Game {
 
-    private static final long MINIMUM_ELAPSED = 100;
+    private static final long MINIMUM_ELAPSED = 10;
 
     private final Object lock = new Object();
     @GuardedBy("lock")
@@ -31,7 +31,6 @@ public class Game {
     public void run() {
         System.out.println("Game run");
         updateThread.start();
-        System.out.println("staetlogger run");
         stateLoggerThread.start();
     }
 
@@ -47,12 +46,12 @@ public class Game {
     }
 
     private void logState() {
-        System.out.println("getting logState lock");
         synchronized (lock) {
-            System.out.println("got logState lock");
             for (GameObject gameObject : gameObjects) {
                 ResourceStorageComponent storage = gameObject.getComponent(ResourceStorageComponent.class);
                 if (storage != null) {
+                    System.out.println("Corn seed: " + storage.getResource(Resources.CORN_SEED));
+                    System.out.println("Water: " + storage.getResource(Resources.WATER));
                     System.out.println("Corn: " + storage.getResource(Resources.CORN));
                 }
             }
@@ -83,9 +82,7 @@ public class Game {
     private final class StateLoggerThread extends Thread {
         @Override
         public void run() {
-            System.out.println("StateLogger run");
             while (true) {
-                System.out.println("Trying to log state");
                 try {
                     logState();
                     sleep(1000);
