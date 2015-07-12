@@ -17,7 +17,7 @@ public class ResourceStorageComponent extends Component {
     }
 
     public void addResource(int resource, long amount) {
-        if (!allowedResources.contains(resource)) {
+        if (!allowedResources.contains(Resources.ALL) && !allowedResources.contains(resource)) {
             throw new IllegalArgumentException(
                     String.format("Resource type %s cannot be added to this object.", resource));
         }

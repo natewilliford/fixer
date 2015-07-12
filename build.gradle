@@ -7,11 +7,14 @@ sourceCompatibility = 1.7
 
 repositories {
     mavenCentral()
+    maven {
+        url "http://maven.restlet.com"
+    }
 }
 
 dependencies {
-//    compile 'org.restlet.jse:org.restlet:2.3.3',
-//            'org.restlet.jse:org.restlet.ext.jackson:2.3.3'
+    compile 'org.restlet.jse:org.restlet:2.3.3',
+            'org.restlet.jse:org.restlet.ext.jackson:2.3.3'
 
     compile 'net.jcip:jcip-annotations:1.0'
     compile 'org.xerial:sqlite-jdbc:3.8.10.1'

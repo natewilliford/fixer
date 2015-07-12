@@ -1,13 +1,6 @@
-package com.natewilliford.fixer;
+package com.natewilliford.fixer.objects;
 
-import com.natewilliford.fixer.objects.FarmPlotObject;
-import com.natewilliford.fixer.objects.GameObject;
-import com.natewilliford.fixer.objects.ResourceStorageComponent;
-import com.natewilliford.fixer.objects.Resources;
 import net.jcip.annotations.GuardedBy;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Game {
 
@@ -15,17 +8,41 @@ public class Game {
 
     private final Object lock = new Object();
     @GuardedBy("lock")
-    private List<GameObject> gameObjects = new ArrayList<>();
+    private GameObjects gameObjects = new GameObjects();
+
+    private static final IdCounter idCounter = new IdCounter();
+
+    public final Users users = new Users();
 
     private UpdateThread updateThread = new UpdateThread();
     private StateLoggerThread stateLoggerThread = new StateLoggerThread();
 
     public void init() {
-        System.out.println("Game init");
-        FarmPlotObject plot1 = new FarmPlotObject();
-        plot1.getComponent(ResourceStorageComponent.class).addResource(Resources.CORN_SEED, 259);
-        plot1.getComponent(ResourceStorageComponent.class).addResource(Resources.WATER, 1240);
-        gameObjects.add(plot1);
+        synchronized (lock) {
+            System.out.println("Game init");
+
+            User nate = buildInitUser(idCounter.nextId(), "hungryish", "derp7");
+            User natalie = buildInitUser(idCounter.nextId(), "sexbox", "slurp7");
+
+            FarmPlotObject natesPlot = new FarmPlotObject(idCounter.nextId());
+            natesPlot.setOwner(nate);
+            gameObjects.addObject(natesPlot);
+
+            FarmPlotObject nataliesPlot = new FarmPlotObject(idCounter.nextId());
+            nataliesPlot.setOwner(natalie);
+            gameObjects.addObject(nataliesPlot);
+        }
+    }
+
+    private User buildInitUser(long id, String username, String password) {
+        User user = new User(id, username, password);
+        ResourceStorageComponent storage = user.getComponent(ResourceStorageComponent.class);
+        storage.addResource(Resources.WATER, 100);
+        storage.addResource(Resources.CORN_SEED, 100);
+
+        users.addUser(user);
+        gameObjects.addObject(user);
+        return user;
     }
 
     public void run() {
@@ -36,26 +53,29 @@ public class Game {
 
     // TODO: There are probably more efficient ways of doing this. Thread pool?
     private void update(long elapsed) {
-//        System.out.println("getting update lock");
         synchronized (lock) {
-//            System.out.println("got update lock");
             for (GameObject gameObject : gameObjects) {
                 gameObject.update(elapsed);
             }
         }
     }
 
-    private void logState() {
+    public String getDebugState() {
         synchronized (lock) {
             for (GameObject gameObject : gameObjects) {
                 ResourceStorageComponent storage = gameObject.getComponent(ResourceStorageComponent.class);
                 if (storage != null) {
-                    System.out.println("Corn seed: " + storage.getResource(Resources.CORN_SEED));
-                    System.out.println("Water: " + storage.getResource(Resources.WATER));
-                    System.out.println("Corn: " + storage.getResource(Resources.CORN));
+                    return "Corn seed: " + storage.getResource(Resources.CORN_SEED) + "\n" +
+                            "Water: " + storage.getResource(Resources.WATER) + "\n" +
+                            "Corn: " + storage.getResource(Resources.CORN) + "\n";
                 }
             }
         }
+        return "No debug state could be built";
+    }
+
+    private void logState() {
+        System.out.print(getDebugState());
     }
 
     private final class UpdateThread extends Thread {
@@ -90,6 +110,15 @@ public class Game {
                     // whatevs
                 }
             }
+        }
+    }
+
+    private static final class IdCounter {
+        private long nextId = 0;
+        IdCounter() {}
+
+        long nextId() {
+            return ++nextId;
         }
     }
 }

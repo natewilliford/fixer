@@ -9,9 +9,28 @@ public abstract class GameObject {
     private final Map<Class, Component> components = new HashMap<>();
     private final Map<Class, Updatable> updatableComponents = new HashMap<>();
 
-    public abstract int getType();
+    private final long id;
+    private long ownerId = -1;
 
-    public void addComponent(Component component) {
+    GameObject(long objectId) {
+        this.id = objectId;
+    }
+
+    abstract int getType();
+
+    long getId() {
+        return id;
+    }
+
+    void setOwner(User user) {
+        ownerId = user.getId();
+    }
+
+    long getOwnerId() {
+        return ownerId;
+    }
+
+    void addComponent(Component component) {
         component.setGameObject(this);
         components.put(component.getClass(), component);
         if (component instanceof Updatable) {
@@ -19,27 +38,27 @@ public abstract class GameObject {
         }
     }
 
-    public void addComponents(List<Component> components) {
+    void addComponents(List<Component> components) {
         for (Component c : components) {
             addComponent(c);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends Component> T getComponent(Class<T> c) {
+    <T extends Component> T getComponent(Class<T> c) {
         // TODO: Make sure we've called init so all the components get a chance to start.
         // TODO: Throw something if it doesn't exist?
         return (T) components.get(c);
     }
 
-    public void init() {
+    void init() {
         // TODO: Make sure it's initialized exactly once.
         for (Component c : components.values()) {
             c.onInit();
         }
     }
 
-    public void update(long elapsed) {
+    void update(long elapsed) {
         // TODO: Make sure we've called init so all the components get a chance to start.
         for (Updatable c : updatableComponents.values()) {
             c.onUpdate(elapsed);
