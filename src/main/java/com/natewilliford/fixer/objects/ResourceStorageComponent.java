@@ -38,4 +38,12 @@ public class ResourceStorageComponent extends Component {
 
     @Override
     public void onInit() {}
+
+    public String getDebugState() {
+        StringBuilder builder = new StringBuilder();
+        for (int resource : allowedResources) {
+            builder.append(Resources.getResourceName(resource) + ": " + getResource(resource) + "\n");
+        }
+        return builder.toString();
+    }
 }

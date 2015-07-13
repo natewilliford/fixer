@@ -1,6 +1,6 @@
 package com.natewilliford.fixer.objects;
 
-public abstract class Component {
+abstract class Component {
 
     private GameObject gameObject;
 
@@ -8,9 +8,9 @@ public abstract class Component {
         this.gameObject = gameObject;
     }
 
-    public GameObject getGameObject() {
+    GameObject getGameObject() {
         return gameObject;
     }
 
-    public abstract void onInit();
+    abstract void onInit();
 }

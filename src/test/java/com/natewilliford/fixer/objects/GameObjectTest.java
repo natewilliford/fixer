@@ -1,11 +1,6 @@
 package com.natewilliford.fixer.objects;
 
-import com.natewilliford.fixer.objects.com.natewilliford.fixer.objects.testobjects.Components;
 import junit.framework.TestCase;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.Arrays;
 
 public class GameObjectTest extends TestCase {
 

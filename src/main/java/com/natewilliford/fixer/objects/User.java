@@ -35,6 +35,11 @@ public class User extends GameObject {
         return username;
     }
 
+    // TODO: I don't like this one bit.
+    public String getPassword() {
+        return password;
+    }
+
     public boolean validPassword(String checkPassword) {
         return password.equals(checkPassword);
     }

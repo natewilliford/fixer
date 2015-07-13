@@ -21,8 +21,10 @@ public class Game {
         synchronized (lock) {
             System.out.println("Game init");
 
-            User nate = buildInitUser(idCounter.nextId(), "hungryish", "derp7");
-            User natalie = buildInitUser(idCounter.nextId(), "sexbox", "slurp7");
+            User nate = buildInitUser(idCounter.nextId(), "hungryish", "oisd89seofkijdfsoi");
+            User natalie = buildInitUser(idCounter.nextId(), "sexboxfox", "adsofij893i");
+
+            nate.getComponent(ResourceStorageComponent.class).addResource(Resources.WATER, 20);
 
             FarmPlotObject natesPlot = new FarmPlotObject(idCounter.nextId());
             natesPlot.setOwner(nate);
@@ -73,6 +75,14 @@ public class Game {
         }
         return "No debug state could be built";
     }
+
+    public String getDebugStateForUser(String username) {
+        User user = users.getForName(username);
+
+        return "User Resources: \n" +
+                user.getComponent(ResourceStorageComponent.class).getDebugState();
+    }
+
 
     private void logState() {
         System.out.print(getDebugState());

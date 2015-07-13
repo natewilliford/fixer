@@ -17,11 +17,17 @@ class GameObjects implements Iterable<GameObject> {
     }
 
     private final Map<Long, GameObject> objectsById = new HashMap<>();
+    private final Map<Long, GameObject> objectsByOwner = new HashMap<>();
 
     void addObject(GameObject object) throws IllegalArgumentException {
         if (objectsById.containsKey(object.getId())) {
             throw new IllegalArgumentException("An object with that ID already exists");
         }
         objectsById.put(object.getId(), object);
+        objectsByOwner.put(object.getOwnerId(), object);
+    }
+
+    GameObject getObjectsByOwner(User user) {
+        return objectsByOwner.get(user.getId());
     }
 }
