@@ -1,10 +1,12 @@
 package com.natewilliford.fixer.objects;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class GameObject {
+public abstract class GameObject implements Jsonizable {
 
     private final Map<Class, Component> components = new HashMap<>();
     private final Map<Class, Updatable> updatableComponents = new HashMap<>();
@@ -63,5 +65,24 @@ public abstract class GameObject {
         for (Updatable c : updatableComponents.values()) {
             c.onUpdate(elapsed);
         }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject gameObject = new JSONObject();
+
+        gameObject.put("id", getId());
+        gameObject.put("type", getType());
+
+        Map<Integer, JSONObject> jsonComponents = new HashMap<>();
+
+        for (Component c : components.values()) {
+            if (c instanceof Jsonizable) {
+                jsonComponents.put(c.getType(), ((Jsonizable) c).toJson());
+            }
+        }
+
+        gameObject.put("components", jsonComponents);
+        return gameObject;
     }
 }

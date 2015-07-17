@@ -2,6 +2,8 @@ package com.natewilliford.fixer.objects;
 
 import net.jcip.annotations.GuardedBy;
 
+import java.util.Collection;
+
 public class Game {
 
     private static final long MINIMUM_ELAPSED = 10;
@@ -21,7 +23,7 @@ public class Game {
         synchronized (lock) {
             System.out.println("Game init");
 
-            User nate = buildInitUser(idCounter.nextId(), "hungryish", "oisd89seofkijdfsoi");
+            User nate = buildInitUser(idCounter.nextId(), "hungryish", "derp7");
             User natalie = buildInitUser(idCounter.nextId(), "sexboxfox", "adsofij893i");
 
             nate.getComponent(ResourceStorageComponent.class).addResource(Resources.WATER, 20);
@@ -81,6 +83,12 @@ public class Game {
 
         return "User Resources: \n" +
                 user.getComponent(ResourceStorageComponent.class).getDebugState();
+    }
+
+    public Collection<GameObject> gameObjectsForUser(User user) {
+        synchronized (lock) {
+            return gameObjects.getObjectsByOwner(user);
+        }
     }
 
 

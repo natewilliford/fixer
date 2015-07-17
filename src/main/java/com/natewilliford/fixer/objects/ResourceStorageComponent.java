@@ -1,11 +1,14 @@
 package com.natewilliford.fixer.objects;
 
+import org.json.JSONObject;
+
 import java.util.*;
 
-public class ResourceStorageComponent extends Component {
+public class ResourceStorageComponent extends Component implements Jsonizable {
 
+    public final Map<Integer, Long> resources = new HashMap<>();
     private final Set<Integer> allowedResources;
-    private final Map<Integer, Long> resources = new HashMap<>();
+
 
     ResourceStorageComponent(Integer... allowedResources) {
         super();
@@ -38,6 +41,22 @@ public class ResourceStorageComponent extends Component {
 
     @Override
     public void onInit() {}
+
+    @Override
+    int getType() {
+        return Components.Type.RESORUCE_STORAGE;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        JSONObject resourcesJson = new JSONObject();
+        json.put("resources", resourcesJson);
+        for (Map.Entry<Integer, Long> entry : resources.entrySet()) {
+            resourcesJson.put(String.valueOf(entry.getKey()), entry.getValue());
+        }
+        return json;
+    }
 
     public String getDebugState() {
         StringBuilder builder = new StringBuilder();

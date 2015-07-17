@@ -1,5 +1,6 @@
 package com.natewilliford.fixer;
 
+import com.natewilliford.fixer.api.GameObjectsServerResource;
 import com.natewilliford.fixer.api.HelloWorldServerResource;
 import com.natewilliford.fixer.objects.Game;
 import com.natewilliford.fixer.objects.User;
@@ -48,6 +49,7 @@ public class Main {
 
             guard.setVerifier(new GameVerifier());
             router.attach("/hello", HelloWorldServerResource.class);
+            router.attach("/gameobjects", GameObjectsServerResource.class);
 
             guard.setNext(router);
 

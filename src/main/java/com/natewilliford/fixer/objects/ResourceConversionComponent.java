@@ -1,5 +1,7 @@
 package com.natewilliford.fixer.objects;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +45,11 @@ public class ResourceConversionComponent extends Component implements Updatable 
             }
             tick();
         }
+    }
+
+    @Override
+    int getType() {
+        return Components.Type.RESOURCE_CONVERSION;
     }
 
     private boolean canTick() {

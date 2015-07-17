@@ -13,4 +13,6 @@ abstract class Component {
     }
 
     abstract void onInit();
+
+    abstract int getType();
 }
