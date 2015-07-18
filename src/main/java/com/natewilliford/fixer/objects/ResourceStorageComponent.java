@@ -7,8 +7,10 @@ import java.util.*;
 public class ResourceStorageComponent extends Component implements Jsonizable {
 
     public final Map<Integer, Long> resources = new HashMap<>();
-    private final Set<Integer> allowedResources;
 
+    // TODO: Merge allowed and max.
+    private final Set<Integer> allowedResources;
+    private final Map<Integer, Long> resourceMax = new HashMap<>();
 
     ResourceStorageComponent(Integer... allowedResources) {
         super();
@@ -64,5 +66,14 @@ public class ResourceStorageComponent extends Component implements Jsonizable {
             builder.append(Resources.getResourceName(resource) + ": " + getResource(resource) + "\n");
         }
         return builder.toString();
+    }
+
+    void setResourceMax(int type, long max) {
+        resourceMax.put(type, max);
+    }
+
+    long getResourceRoomLeft(int type) {
+        long max = resourceMax.get(type) != null ? resourceMax.get(type) : Long.MAX_VALUE;
+        return max - getResource(type);
     }
 }

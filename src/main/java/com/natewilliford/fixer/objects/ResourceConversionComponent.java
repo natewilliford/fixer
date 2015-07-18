@@ -59,6 +59,12 @@ public class ResourceConversionComponent extends Component implements Updatable 
                 return false;
             }
         }
+        for (Map.Entry<Integer, Integer> entry : produceResources.entrySet()) {
+            if (resourceStorageComponent.getResourceRoomLeft(entry.getKey()) < entry.getValue()) {
+                // There isn't enough room to tick.
+                return false;
+            }
+        }
         return true;
     }
 

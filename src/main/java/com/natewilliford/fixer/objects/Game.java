@@ -114,10 +114,7 @@ public class Game {
             }
 
             long existingRes = fromResourceComponent.getResource(type);
-            // TODO
-//            long resCapacity = toResourceComponent.getMaxResource(type);
-            long resCapacity = Long.MAX_VALUE;
-
+            long resCapacity = toResourceComponent.getResourceRoomLeft(type);
 
             // The actual amount we want to transfer is the minimum of the attempted amount, existing resource amount,
             // and storage capacity of the receiving object.

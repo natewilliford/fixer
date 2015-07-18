@@ -6,6 +6,9 @@ public class FarmPlotObject extends GameObject {
         super(id);
         ResourceStorageComponent storage = new ResourceStorageComponent(
                 Resources.CORN_SEED, Resources.WATER, Resources.CORN);
+        storage.setResourceMax(Resources.WATER, 10);
+        storage.setResourceMax(Resources.CORN_SEED, 10);
+        storage.setResourceMax(Resources.CORN, 10);
         addComponent(storage);
 
         ResourceConversionComponent conversion = new ResourceConversionComponent(1000);
