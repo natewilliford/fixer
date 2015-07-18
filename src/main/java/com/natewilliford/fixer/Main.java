@@ -2,6 +2,7 @@ package com.natewilliford.fixer;
 
 import com.natewilliford.fixer.api.GameObjectsServerResource;
 import com.natewilliford.fixer.api.HelloWorldServerResource;
+import com.natewilliford.fixer.api.ResourceTransferServerResource;
 import com.natewilliford.fixer.objects.Game;
 import com.natewilliford.fixer.objects.User;
 import org.restlet.Application;
@@ -30,7 +31,6 @@ public class Main {
         game.init();
         game.run();
 
-
         Component component = new Component();
         component.getServers().add(Protocol.HTTP, 9876);
         FixerApp app = new FixerApp();
@@ -50,6 +50,7 @@ public class Main {
             guard.setVerifier(new GameVerifier());
             router.attach("/hello", HelloWorldServerResource.class);
             router.attach("/gameobjects", GameObjectsServerResource.class);
+            router.attach("/resource/{objectId}/{type}/transfer/{toObjectId}/{amount}", ResourceTransferServerResource.class);
 
             guard.setNext(router);
 

@@ -20,7 +20,7 @@ public abstract class GameObject implements Jsonizable {
 
     abstract int getType();
 
-    long getId() {
+    public long getId() {
         return id;
     }
 

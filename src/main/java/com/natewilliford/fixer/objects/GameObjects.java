@@ -34,4 +34,8 @@ class GameObjects implements Iterable<GameObject> {
     Collection<GameObject> getObjectsByOwner(User user) {
         return objectsByOwner.get(user.getId());
     }
+
+    GameObject getById(long id) {
+        return objectsById.get(id);
+    }
 }

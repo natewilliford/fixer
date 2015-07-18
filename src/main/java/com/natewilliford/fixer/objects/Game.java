@@ -1,8 +1,10 @@
 package com.natewilliford.fixer.objects;
 
 import net.jcip.annotations.GuardedBy;
+import sun.security.util.Resources_it;
 
 import java.util.Collection;
+import java.util.IllegalFormatCodePointException;
 
 public class Game {
 
@@ -91,6 +93,43 @@ public class Game {
         }
     }
 
+    public void transferResource(long ownerId, long fromObjectId, long toObjectId, int type, long amount) throws IllegalArgumentException {
+        synchronized (lock) {
+            User user = users.getForId(ownerId);
+            GameObject fromObject = gameObjects.getById(fromObjectId);
+            GameObject toObject = gameObjects.getById(toObjectId);
+            if (user == null || fromObject == null || toObject == null) {
+                throw new IllegalArgumentException("Object doesn't exist with this id.");
+            }
+
+            if (!user.ownsObject(fromObject) || !user.ownsObject(toObject)) {
+                throw new IllegalArgumentException("The user must own both objects to transfer");
+            }
+
+            ResourceStorageComponent fromResourceComponent = fromObject.getComponent(ResourceStorageComponent.class);
+            ResourceStorageComponent toResourceComponent = toObject.getComponent(ResourceStorageComponent.class);
+
+            if (fromResourceComponent == null || toResourceComponent == null) {
+                throw new IllegalArgumentException("This object isn't able to store resources.");
+            }
+
+            long existingRes = fromResourceComponent.getResource(type);
+            // TODO
+//            long resCapacity = toResourceComponent.getMaxResource(type);
+            long resCapacity = Long.MAX_VALUE;
+
+
+            // The actual amount we want to transfer is the minimum of the attempted amount, existing resource amount,
+            // and storage capacity of the receiving object.
+            long actualTransferAmount = Math.min(Math.min(amount, existingRes), resCapacity);
+
+            System.out.println(String.format("Transfering %s of %s from object %s to %s",
+                    actualTransferAmount, Resources.getResourceName(type), fromObjectId, toObjectId));
+
+            fromResourceComponent.removeResource(type, actualTransferAmount);
+            toResourceComponent.addResource(type, actualTransferAmount);
+        }
+    }
 
     private void logState() {
         System.out.print(getDebugState());

@@ -2,13 +2,11 @@ package com.natewilliford.fixer.objects;
 
 public class User extends GameObject {
 
-    private final long id;
     private final String username;
     private final String password;
 
     public User(long id, String username, String password) {
         super(id);
-        this.id = id;
         this.username = username;
         this.password = password;
 
@@ -19,16 +17,6 @@ public class User extends GameObject {
     @Override
     int getType() {
         return GameObjects.Type.USER;
-    }
-
-    @Override
-    long getOwnerId() {
-        System.out.println("WARNING: Getting a user's ownerId which doesn't make sense.");
-        return Users.SYSTEM_USER_ID;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getUsername() {
@@ -42,6 +30,12 @@ public class User extends GameObject {
 
     public boolean validPassword(String checkPassword) {
         return password.equals(checkPassword);
+    }
+
+    public boolean ownsObject(GameObject object) {
+        // A user owns an object either if they have the owner id or if it is the user itself. I.e. the user, which is a
+        // GameObject, owns itself.
+        return object.getOwnerId() == getId() || object.getId() == getId();
     }
 }
 
