@@ -1,7 +1,5 @@
 package com.natewilliford.fixer.db;
 
-import org.json.JSONObject;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,9 +11,7 @@ public class ComponentTable extends Table {
     private static final String COL_TYPE = "type";
     private static final String COL_DATA = "data";
 
-    ComponentTable(Connection connection) {
-        super(connection);
-    }
+    ComponentTable() {}
 
     @Override
     public String getTableName() {
@@ -23,7 +19,12 @@ public class ComponentTable extends Table {
     }
 
     @Override
-    public void create() throws SQLException {
+    int getVersion() {
+        return 1;
+    }
+
+    @Override
+    void create(Connection connection) throws SQLException {
         String sql = "CREATE TABLE " + TABLE_NAME + " (" +
                 COL_OBJECT_ID + " CHAR(36) NOT NULL, " +
                 COL_TYPE + " INT NOT NULL, " +
@@ -35,13 +36,16 @@ public class ComponentTable extends Table {
         statement.close();
     }
 
-    public void save(String gameObjectId, int componentType, JSONObject json) throws SQLException {
-        String sql = String.format("REPLACE INTO %s (%s, %s, %s ) VALUES ('%s', %s, '%s');",
-                TABLE_NAME, COL_OBJECT_ID, COL_TYPE, COL_DATA,
-                gameObjectId, componentType, json);
+    @Override
+    void upgrade(Connection connection, int version) throws SQLException {}
 
-        Statement statement = connection.createStatement();
-        statement.executeUpdate(sql);
-        statement.close();
-    }
+//    public void save(String gameObjectId, int componentType, JSONObject json) throws SQLException {
+//        String sql = String.format("REPLACE INTO %s (%s, %s, %s ) VALUES ('%s', %s, '%s');",
+//                TABLE_NAME, COL_OBJECT_ID, COL_TYPE, COL_DATA,
+//                gameObjectId, componentType, json);
+//
+//        Statement statement = connection.createStatement();
+//        statement.executeUpdate(sql);
+//        statement.close();
+//    }
 }

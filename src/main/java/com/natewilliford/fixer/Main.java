@@ -3,6 +3,7 @@ package com.natewilliford.fixer;
 import com.natewilliford.fixer.api.GameObjectsServerResource;
 import com.natewilliford.fixer.api.HelloWorldServerResource;
 import com.natewilliford.fixer.api.ResourceTransferServerResource;
+import com.natewilliford.fixer.db.Database;
 import com.natewilliford.fixer.objects.Game;
 import com.natewilliford.fixer.objects.User;
 import org.restlet.Application;
@@ -14,17 +15,20 @@ import org.restlet.routing.Router;
 import org.restlet.security.ChallengeAuthenticator;
 import org.restlet.security.LocalVerifier;
 
+import javax.xml.crypto.Data;
+
 public class Main {
 
     public static Game game;
+    public static Database database;
 
     public static void main(String[] args) throws Exception {
 
         System.out.println("Starting main");
 
-//        Database db = new Database();
-//        db.connect();
-
+        database = new Database();
+        database.connect();
+        database.init();
 
         game = new Game();
 

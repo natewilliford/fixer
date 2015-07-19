@@ -5,12 +5,8 @@ import java.sql.SQLException;
 
 abstract class Table {
 
-    protected final Connection connection;
-
     abstract String getTableName();
-    abstract void create() throws SQLException;
-
-    Table(Connection connection) {
-        this.connection = connection;
-    }
+    abstract int getVersion();
+    abstract void create(Connection connection) throws SQLException;
+    abstract void upgrade(Connection connection, int version) throws SQLException;
 }

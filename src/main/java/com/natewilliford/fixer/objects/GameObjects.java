@@ -17,7 +17,8 @@ class GameObjects implements Iterable<GameObject> {
 
     interface Type {
         int USER = 1;
-        int FARM_PLOT = 2;
+        int MARKET = 2;
+        int FARM_PLOT = 10;
     }
 
     private final Map<Long, GameObject> objectsById = new HashMap<>();
