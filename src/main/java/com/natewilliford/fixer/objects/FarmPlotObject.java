@@ -2,7 +2,7 @@ package com.natewilliford.fixer.objects;
 
 public class FarmPlotObject extends GameObject {
 
-    public FarmPlotObject(long id) {
+    public FarmPlotObject(int id) {
         super(id);
         ResourceStorageComponent storage = new ResourceStorageComponent(
                 Resources.CORN_SEED, Resources.WATER, Resources.CORN);

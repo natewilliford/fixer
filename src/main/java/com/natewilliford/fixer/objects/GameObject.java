@@ -11,16 +11,16 @@ public abstract class GameObject implements Jsonizable {
     private final Map<Class, Component> components = new HashMap<>();
     private final Map<Class, Updatable> updatableComponents = new HashMap<>();
 
-    private final long id;
-    private long ownerId = -1;
+    private final int id;
+    private int ownerId = -1;
 
-    GameObject(long objectId) {
+    GameObject(int objectId) {
         this.id = objectId;
     }
 
     abstract int getType();
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
@@ -28,7 +28,7 @@ public abstract class GameObject implements Jsonizable {
         ownerId = user.getId();
     }
 
-    long getOwnerId() {
+    int getOwnerId() {
         return ownerId;
     }
 

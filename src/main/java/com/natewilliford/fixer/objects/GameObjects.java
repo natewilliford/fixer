@@ -17,12 +17,11 @@ class GameObjects implements Iterable<GameObject> {
 
     interface Type {
         int USER = 1;
-        int MARKET = 2;
         int FARM_PLOT = 10;
     }
 
-    private final Map<Long, GameObject> objectsById = new HashMap<>();
-    private final Multimap<Long, GameObject> objectsByOwner = HashMultimap.create();
+    private final Map<Integer, GameObject> objectsById = new HashMap<>();
+    private final Multimap<Integer, GameObject> objectsByOwner = HashMultimap.create();
 
     void addObject(GameObject object) throws IllegalArgumentException {
         if (objectsById.containsKey(object.getId())) {

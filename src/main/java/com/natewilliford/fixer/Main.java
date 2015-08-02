@@ -2,6 +2,7 @@ package com.natewilliford.fixer;
 
 import com.natewilliford.fixer.api.GameObjectsServerResource;
 import com.natewilliford.fixer.api.HelloWorldServerResource;
+import com.natewilliford.fixer.api.MarketOrdersServerResource;
 import com.natewilliford.fixer.api.ResourceTransferServerResource;
 import com.natewilliford.fixer.db.Database;
 import com.natewilliford.fixer.objects.Game;
@@ -14,8 +15,6 @@ import org.restlet.data.Protocol;
 import org.restlet.routing.Router;
 import org.restlet.security.ChallengeAuthenticator;
 import org.restlet.security.LocalVerifier;
-
-import javax.xml.crypto.Data;
 
 public class Main {
 
@@ -55,6 +54,8 @@ public class Main {
             router.attach("/hello", HelloWorldServerResource.class);
             router.attach("/gameobjects", GameObjectsServerResource.class);
             router.attach("/resource/{objectId}/{type}/transfer/{toObjectId}/{amount}", ResourceTransferServerResource.class);
+//            router.attach("/market-order/{orderId}", MarketOrdeasdfrServerResource.class);
+            router.attach("/market-orders/{resourceType}/{orderType}", MarketOrdersServerResource.class);
 
             guard.setNext(router);
 

@@ -5,7 +5,7 @@ public class User extends GameObject {
     private final String username;
     private final String password;
 
-    public User(long id, String username, String password) {
+    public User(int id, String username, String password) {
         super(id);
         this.username = username;
         this.password = password;

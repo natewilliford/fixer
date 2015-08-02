@@ -8,7 +8,7 @@ public class Users {
     public static final long SYSTEM_USER_ID = -1;
 
     private Map<String, User> usersByName = new HashMap<>();
-    private Map<Long, User> usersById = new HashMap<>();
+    private Map<Integer, User> usersById = new HashMap<>();
 
     void addUser(User user) {
         usersByName.put(user.getUsername(), user);

@@ -18,7 +18,6 @@ public class Database {
 
     private List<Table> tables = new ArrayList<>();
 
-
     public Database() {}
 
     public void connect() {
@@ -74,7 +73,7 @@ public class Database {
             resultSet = connection.createStatement().executeQuery(sql);
 
             if (resultSet.next()) {
-                return resultSet.getInt("version");
+                return resultSet.getInt(VERSIONS_COL_VERSION);
             }
         } catch (SQLException e) {
           // TODO: Log something.
@@ -94,5 +93,9 @@ public class Database {
                 "VALUES ('" + tableName + "', " + version + ")";
         System.out.println("Executing SQL: " + sql);
         connection.createStatement().executeUpdate(sql);
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

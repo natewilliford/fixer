@@ -40,7 +40,7 @@ public class Game {
         }
     }
 
-    private User buildInitUser(long id, String username, String password) {
+    private User buildInitUser(int id, String username, String password) {
         User user = new User(id, username, password);
         ResourceStorageComponent storage = user.getComponent(ResourceStorageComponent.class);
         storage.addResource(Resources.WATER, 100);
@@ -93,7 +93,7 @@ public class Game {
         }
     }
 
-    public void transferResource(long ownerId, long fromObjectId, long toObjectId, int type, long amount) throws IllegalArgumentException {
+    public void transferResource(int ownerId, int fromObjectId, int toObjectId, int type, long amount) throws IllegalArgumentException {
         synchronized (lock) {
             User user = users.getForId(ownerId);
             GameObject fromObject = gameObjects.getById(fromObjectId);
@@ -168,10 +168,10 @@ public class Game {
     }
 
     private static final class IdCounter {
-        private long nextId = 0;
+        private int nextId = 0;
         IdCounter() {}
 
-        long nextId() {
+        int nextId() {
             return ++nextId;
         }
     }
